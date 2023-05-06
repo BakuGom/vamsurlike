@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="firebase_database_url" translatable="false">https://vamsurlike-default-rtdb.firebaseio.com</string>
+  <string name="gcm_defaultSenderId" translatable="false">110128638779</string>
+  <string name="google_storage_bucket" translatable="false">vamsurlike.appspot.com</string>
+  <string name="project_id" translatable="false">vamsurlike</string>
+  <string name="google_api_key" translatable="false">AIzaSyCz4MQFUkvMe0i6L8vo0sOiEGkh2TpinV4</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCz4MQFUkvMe0i6L8vo0sOiEGkh2TpinV4</string>
+  <string name="google_app_id" translatable="false">1:110128638779:android:b8d01284ef8fec4e5be51e</string>
+  <string name="default_web_client_id" translatable="false">110128638779-t6upggq246vkurgpn3sj9lqvttgo28k2.apps.googleusercontent.com</string>
+</resources>
