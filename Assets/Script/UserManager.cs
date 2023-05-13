@@ -10,6 +10,7 @@ public class UserManager : MonoBehaviour
     private FirebaseFirestore db;
     public TMP_InputField idInputField;
     public TMP_InputField passwordInputField;
+    public static bool check = false;
     void Start()
     {
         db = FirebaseFirestore.DefaultInstance;
@@ -29,7 +30,7 @@ public class UserManager : MonoBehaviour
         if (documentData.ContainsKey("password") && documentData["password"].ToString() == password)
         {
             Debug.Log("Signin 성공 게임씬으로 전환");
-     
+            check = true;
         }
         else
         {
