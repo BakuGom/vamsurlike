@@ -2,8 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 [System.Serializable]
-public class HPEvent : UnityEngine.Events.UnityEvent<int, int> { }
-public class Status : MonoBehaviour
+public class EnemyHPEvent : UnityEngine.Events.UnityEvent<int, int> { }
+public class EnemyStatus : MonoBehaviour
 {
     [HideInInspector]
     public HPEvent onHPEvent = new HPEvent();
@@ -17,12 +17,6 @@ public class Status : MonoBehaviour
     [SerializeField]
     private int maxHP = 100;
     private int currentHP;
-    [Header("Level")]
-    [SerializeField]
-    private int maxLevel = 200;
-    private int currentLevel;
-    [Header("EXP")]
-    private int currentEXP;
     public float NormalSpeed => normalSpeed;
     public float FastSpeed => fastSpeed;
     public int CurrentHP => currentHP;
@@ -31,12 +25,10 @@ public class Status : MonoBehaviour
     {
         currentHP = maxHP;
     }
-    public void IncreaseEXP(int exp)
-    { }
-    public void LevelUp(int level)
-    { }
+
     public bool DecreaseHP(int damage)
     {
+        Debug.Log(string.Format("Take {0} damage", damage));
         int previousHP = currentHP;
         currentHP = currentHP - damage > 0 ? currentHP - damage : 0;
         onHPEvent.Invoke(previousHP, currentHP);
@@ -52,5 +44,5 @@ public class Status : MonoBehaviour
         currentHP = currentHP + hp > MaxHP ? MaxHP : currentHP + hp;
         onHPEvent.Invoke(previousHP, currentHP);
     }
-    
+
 }

@@ -27,7 +27,7 @@ public class EnemyMemoryPool : MonoBehaviour
     private IEnumerator SpawnTile()
     {
         int currentNumber = 0;
-        int maxinumber = 50;
+        int maxinumber = 200;
         while (true)
         {
             for (int i = 0; i < numberOfEnemiesSpawnAtOnce; i++)
@@ -59,5 +59,6 @@ public class EnemyMemoryPool : MonoBehaviour
     public void DeactivataEnemy(GameObject enemy)
     {
         enemyMemoryPool.DeactivatePoolItem(enemy);
+
     }
 }

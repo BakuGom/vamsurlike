@@ -11,23 +11,29 @@ public class EnemyFSM : MonoBehaviour
     [SerializeField]
     private float pursuitLimitRange = 10;
     [Header("Attack")]
+    //[SerializeField]
+    //private GameObject projectilePrefab;
+    //[SerializeField]
+    //private Transform projectileSpawnPoint;
     [SerializeField]
-    private GameObject projectilePrefab;
+    private GameObject EXPItem;
+    //[SerializeField]
+    //private float attackRange = 0;
+    //[SerializeField]
+    //private float attackRate = 1;
     [SerializeField]
-    private Transform projectileSpawnPoint;
-    [SerializeField]
-    private float attackRange = 1;
-    [SerializeField]
-    private float attackRate = 1;
+    private int attackPower = 10;
     private EnemyState enemyState = EnemyState.None;
     private float lastAttackTime = 0;
-    private Status status;
+    private EnemyStatus status;
+    private PlayerController playerController;
     private NavMeshAgent navMeshAgent;
     private Transform target;
     private EnemyMemoryPool enemyMemoryPool;
     public void Setup(Transform target, EnemyMemoryPool enemyMemoryPool)
     {
-        status = GetComponent<Status>();
+        playerController = target.GetComponent<PlayerController>();
+        status = GetComponent<EnemyStatus>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         this.target = target;
         this.enemyMemoryPool = enemyMemoryPool;
@@ -97,22 +103,23 @@ public class EnemyFSM : MonoBehaviour
             yield return null;
         }
     }
-    private IEnumerator Attack()
-    {
-        navMeshAgent.ResetPath();
-        while (true)
-        {
-            LookRotationToTarget();
-            CalculateDistanceToTargetAndSelectState();
-            if (Time.time - lastAttackTime > attackRate)
-            {
-                lastAttackTime = Time.time;
-                GameObject clone = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
-                clone.GetComponent<EnemyProjectitle>().Setup(target.position);
-            }
-            yield return null;
-        }
-    }
+
+    //private IEnumerator Attack()
+    //{
+    //    navMeshAgent.ResetPath();
+    //    while (true)
+    //    {
+    //        LookRotationToTarget();
+    //        CalculateDistanceToTargetAndSelectState();
+    //        if (Time.time - lastAttackTime > attackRate)
+    //        {
+    //            lastAttackTime = Time.time;
+    //            GameObject clone = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+    //            clone.GetComponent<EnemyProjectitle>().Setup(target.position);
+    //        }
+    //        yield return null;
+    //    }
+    //}
     private void LookRotationToTarget()
     {
         Vector3 to = new Vector3(target.position.x, 0, target.position.z);
@@ -126,18 +133,18 @@ public class EnemyFSM : MonoBehaviour
     {
         if (target == null) return;
         float distance = Vector3.Distance(target.position, transform.position);
-        if (distance <= attackRange)
-        {
-            ChangeState(EnemyState.Attack);
-        }
-        else if (distance <= targetRecognitionRange)
+        //if (distance <= attackRange)
+        //{
+        //    ChangeState(EnemyState.Attack);
+        //}
+        if (distance <= targetRecognitionRange)
         {
             ChangeState(EnemyState.Pursuit);
         }
-        else if (distance >= pursuitLimitRange)
-        {
-            ChangeState(EnemyState.Wander);
-        }
+        //else if (distance >= pursuitLimitRange)
+        //{
+        //    ChangeState(EnemyState.Wander);
+        //}
     }
     private Vector3 CalculateWanderPosition()
     {
@@ -161,23 +168,52 @@ public class EnemyFSM : MonoBehaviour
         position.z = Mathf.Sin(angle) * radius;
         return position;
     }
-    private void OnDrawGizmos()
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.black;
+    //    Gizmos.DrawRay(transform.position, navMeshAgent.destination - transform.position);
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, targetRecognitionRange);
+    //    Gizmos.color = Color.green;
+    //    Gizmos.DrawWireSphere(transform.position, pursuitLimitRange);
+    //    Gizmos.color = new Color(0.39f, 0.04f, 0.04f);
+    //    Gizmos.DrawWireSphere(transform.position, attackRange);
+    //}
+    private void OnTriggerEnter(Collider other)
     {
-        Gizmos.color = Color.black;
-        Gizmos.DrawRay(transform.position, navMeshAgent.destination - transform.position);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, targetRecognitionRange);
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, pursuitLimitRange);
-        Gizmos.color = new Color(0.39f, 0.04f, 0.04f);
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        if (other.CompareTag("Player"))
+        {
+            PlayerController player = other.GetComponentInParent<PlayerController>();
+            if (player != null)
+            {
+                player.TakeDamage(attackPower);
+            }
+        }
+        if (other.CompareTag("Bullet"))
+        {
+            Debug.Log("Enemy hit");
+            EnemyFSM enemy = other.GetComponentInParent<EnemyFSM>();
+            if (enemy != null)
+            {
+                BulletMovement bullet = other.GetComponent<BulletMovement>();
+                if (bullet != null)
+                {
+                    enemy.TakeDamage(bullet.damage);
+                }
+            }
+            Destroy(other.gameObject);
+        }
     }
+
+
     public void TakeDamage(int damage)
     {
+        Debug.Log("Damage Taken: " + damage);
         bool isDie = status.DecreaseHP(damage);
         if (isDie == true)
         {
             enemyMemoryPool.DeactivataEnemy(gameObject);
+            GameObject expItem = Instantiate(EXPItem, transform.position, Quaternion.identity);
         }
     }
 }

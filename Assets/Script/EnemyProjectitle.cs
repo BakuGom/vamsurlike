@@ -25,13 +25,13 @@ public class EnemyProjectitle : MonoBehaviour
             yield return null;
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            //Debug.Log("player Hit");
-            other.GetComponent<PlayerController>().TakeDamage(damage);
-            Destroy(gameObject);
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        //Debug.Log("player Hit");
+    //        other.GetComponent<PlayerController>().TakeDamage(damage);
+    //        Destroy(gameObject);
+    //    }
+    //}
 }
