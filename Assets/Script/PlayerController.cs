@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
+        Debug.Log("playercontroller's");
         Debug.Log(string.Format("Take {0} damage", damage));
         bool isDie = status.DecreaseHP(damage);
         if (isDie)

@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletMovement : MonoBehaviour
@@ -6,7 +8,11 @@ public class BulletMovement : MonoBehaviour
     private float speed;
     private EnemyFSM enemyFSM;
     public int damage = 100;
-
+    Rigidbody rigid;
+    private void Awake()
+    {
+        rigid = GetComponent<Rigidbody>();
+    }
     public void Initialize(Vector3 dir, float spd)
     {
         direction = dir;
@@ -17,13 +23,4 @@ public class BulletMovement : MonoBehaviour
     {
         transform.position += direction * speed * Time.deltaTime;
     }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Enemy"))
-    //    {
-    //        Debug.Log("Enemy hit");
-    //        other.GetComponent<EnemyFSM>().TakeDamage(damage);
-    //        Destroy(gameObject);
-    //    }
-    //}
 }

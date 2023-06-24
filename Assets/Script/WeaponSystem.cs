@@ -21,10 +21,6 @@ public class WeaponSystem : MonoBehaviour
             direction.Normalize();
 
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.LookRotation(direction));
-
-            Destroy(bullet.GetComponent<Rigidbody>());
-            Destroy(bullet.GetComponent<Collider>());
-
             BulletMovement bulletMovement = bullet.AddComponent<BulletMovement>();
             bulletMovement.Initialize(direction, bulletSpeed);
         }

@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+
 [System.Serializable]
 public class HPEvent : UnityEngine.Events.UnityEvent<int, int> { }
 public class Status : MonoBehaviour
@@ -23,6 +25,8 @@ public class Status : MonoBehaviour
     private int currentLevel;
     [Header("EXP")]
     private int currentEXP;
+    [SerializeField]
+    private TextMeshProUGUI hpText;
     public float NormalSpeed => normalSpeed;
     public float FastSpeed => fastSpeed;
     public int CurrentHP => currentHP;
@@ -30,6 +34,11 @@ public class Status : MonoBehaviour
     private void Awake()
     {
         currentHP = maxHP;
+        UpdateHPText();
+    }
+    private void UpdateHPText()
+    {
+        hpText.text = "" + currentHP.ToString(); // Customize the text format as needed
     }
     public void IncreaseEXP(int exp)
     { }
@@ -44,6 +53,7 @@ public class Status : MonoBehaviour
         {
             return true;
         }
+        UpdateHPText();
         return false;
     }
     public void IncreaseHP(int hp)
@@ -51,6 +61,7 @@ public class Status : MonoBehaviour
         int previousHP = currentHP;
         currentHP = currentHP + hp > MaxHP ? MaxHP : currentHP + hp;
         onHPEvent.Invoke(previousHP, currentHP);
+        UpdateHPText();
     }
     
 }

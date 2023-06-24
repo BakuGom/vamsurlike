@@ -115,11 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetRecognitionRange: 100
   pursuitLimitRange: 10
-  projectilePrefab: {fileID: 0}
-  projectileSpawnPoint: {fileID: 0}
   EXPItem: {fileID: 2081252229549688143, guid: aa43f6c79bd45ef4f9897e9fa2833621, type: 3}
-  attackRange: 5
-  attackRate: 1
   attackPower: 10
 --- !u!195 &-4739259676217846561
 NavMeshAgent:

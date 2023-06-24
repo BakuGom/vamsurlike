@@ -192,16 +192,16 @@ public class EnemyFSM : MonoBehaviour
         if (other.CompareTag("Bullet"))
         {
             Debug.Log("Enemy hit");
-            EnemyFSM enemy = other.GetComponentInParent<EnemyFSM>();
-            if (enemy != null)
-            {
-                BulletMovement bullet = other.GetComponent<BulletMovement>();
-                if (bullet != null)
-                {
-                    enemy.TakeDamage(bullet.damage);
-                }
-            }
-            Destroy(other.gameObject);
+
+            //if (enemy != null)
+            //{
+            //    BulletMovement bullet = other.GetComponent<BulletMovement>();
+            //    if (bullet != null)
+            //    {
+            //        enemy.TakeDamage(bullet.damage);
+            //    }
+            //}
+            //Destroy(other.gameObject);
         }
     }
 
