@@ -13,8 +13,11 @@ public class GameManager : MonoBehaviour
     private bool isLive;
     public float maxGameTime = 30 * 60;
     public float currentTime = 0;
+    public int killScore = 0;
     [SerializeField]
     private TextMeshProUGUI timeScoreText;
+    [SerializeField]
+    private TextMeshProUGUI killScoreText;
     public GameObject CoverImage;
     public GameObject menuPanel;
     private void Update()
@@ -37,7 +40,11 @@ public class GameManager : MonoBehaviour
         string timeText = string.Format("{0:00}:{1:00}", minutes, seconds);
         timeScoreText.text = "" + timeText;
     }
-
+    public void UpdateKillScoreText()
+    {
+        killScore++;
+        killScoreText.text = "" + killScore;
+    }
     public async void OnClickSignInButton()
     {
         await Task.Delay(500);

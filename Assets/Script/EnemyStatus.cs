@@ -28,7 +28,7 @@ public class EnemyStatus : MonoBehaviour
 
     public bool DecreaseHP(int damage)
     {
-        Debug.Log(string.Format("Take {0} damage", damage));
+        //Debug.Log(string.Format("enemy Take {0} damage", damage));
         int previousHP = currentHP;
         currentHP = currentHP - damage > 0 ? currentHP - damage : 0;
         onHPEvent.Invoke(previousHP, currentHP);

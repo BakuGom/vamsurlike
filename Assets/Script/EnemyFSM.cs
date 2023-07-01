@@ -30,8 +30,11 @@ public class EnemyFSM : MonoBehaviour
     private NavMeshAgent navMeshAgent;
     private Transform target;
     private EnemyMemoryPool enemyMemoryPool;
+    private WeaponSystem weaponSystem;
+    private GameManager gameManager;
     public void Setup(Transform target, EnemyMemoryPool enemyMemoryPool)
     {
+        gameManager = FindObjectOfType<GameManager>();
         playerController = target.GetComponent<PlayerController>();
         status = GetComponent<EnemyStatus>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -191,29 +194,33 @@ public class EnemyFSM : MonoBehaviour
         }
         if (other.CompareTag("Bullet"))
         {
-            Debug.Log("Enemy hit");
-
-            //if (enemy != null)
-            //{
-            //    BulletMovement bullet = other.GetComponent<BulletMovement>();
-            //    if (bullet != null)
-            //    {
-            //        enemy.TakeDamage(bullet.damage);
-            //    }
-            //}
-            //Destroy(other.gameObject);
+            //Debug.Log("Enemy hit");
+            BulletMovement bullet = other.GetComponent<BulletMovement>();
+            if (bullet != null)
+            {
+                //Debug.Log("Damage Taken: " + bullet.power);
+                bool isDie = status.DecreaseHP(bullet.power);
+                if (isDie == true)
+                {
+                    gameManager.UpdateKillScoreText();
+                    GameObject expItem = Instantiate(EXPItem, transform.position, Quaternion.identity);
+                    enemyMemoryPool.DeactivataEnemy(gameObject);
+                    
+                }
+            }
         }
+
     }
 
 
-    public void TakeDamage(int damage)
-    {
-        Debug.Log("Damage Taken: " + damage);
-        bool isDie = status.DecreaseHP(damage);
-        if (isDie == true)
-        {
-            enemyMemoryPool.DeactivataEnemy(gameObject);
-            GameObject expItem = Instantiate(EXPItem, transform.position, Quaternion.identity);
-        }
-    }
+    //public void TakeDamage(int damage)
+    //{
+    //    Debug.Log("Damage Taken: " + damage);
+    //    bool isDie = status.DecreaseHP(damage);
+    //    if (isDie == true)
+    //    {
+    //        enemyMemoryPool.DeactivataEnemy(gameObject);
+    //        GameObject expItem = Instantiate(EXPItem, transform.position, Quaternion.identity);
+    //    }
+    //}
 }

@@ -5,6 +5,7 @@ public class WeaponSystem : MonoBehaviour
     public GameObject bulletPrefab;
     public float bulletSpeed = 10f;
     public float fireRate = 0.5f;
+    public int power = 100;
 
     private void Start()
     {
