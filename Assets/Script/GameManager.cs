@@ -19,7 +19,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI killScoreText;
     public GameObject CoverImage;
-    public GameObject menuPanel;
+    public GameObject MenuPanel;
+    public GameObject PauseButton;
+    public GameObject ResumeButton;
+    [SerializeField]
+    public GameObject SkillOption;
     private void Update()
     {
         if (currentTime < maxGameTime)
@@ -63,12 +67,16 @@ public class GameManager : MonoBehaviour
         if (Time.timeScale == 0) //¸ØÃçÀÖÀ¸¸é
         {
             Time.timeScale = 1f; //½ÃÀÛ
-            menuPanel.SetActive(false);
+            MenuPanel.SetActive(false);
+            PauseButton.SetActive(true);
+            ResumeButton.SetActive(false);
         }
         else //¿òÁ÷ÀÌ¸é
         {
             Time.timeScale = 0; //¸ØÃß±â
-            menuPanel.SetActive(true);
+            MenuPanel.SetActive(true);
+            PauseButton.SetActive(false);
+            ResumeButton.SetActive(true);
         }
     }
     

@@ -70,7 +70,7 @@ public class Status : MonoBehaviour
     }
     private void LevelUp()
     {
-        Debug.Log("·¹º§¾÷");
+        bool islevelup = true;
         currentLevel++;
         maxEXP = CalculateMaxEXP(currentLevel);
         currentEXP = 0;
